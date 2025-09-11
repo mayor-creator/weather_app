@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { typography } from "../styles/typography";
 
 const Heading = styled.h1`
-  font-size: ${typography.textPresetOne.fontSize};
-  line-height: ${typography.textPresetOne.lineHeight};
-  letter-spacing: ${typography.textPresetOne.letterSpacing};
-  font-weight: ${typography.textPresetOne.fontWeight};
-  font-family: ${typography.textPresetOne.fontFamily};
+  font-size: ${typography.textPresetTwo.fontSize};
+  line-height: ${typography.textPresetTwo.lineHeight};
+  letter-spacing: ${typography.textPresetTwo.letterSpacing};
+  font-weight: ${typography.textPresetTwo.fontWeight};
+  font-family: ${typography.textPresetTwo.fontFamily};
+  color: var(--color-neutral0);
 `;
 
 export default Heading;
