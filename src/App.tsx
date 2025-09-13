@@ -1,8 +1,6 @@
 import "./App.css";
 import { Header } from "./component/header";
-import { SearchButton } from "./component/SearchButton";
-import { TextInput } from "./component/TextInput";
-
+import { Main } from "./component/main";
 import { GlobalStyles } from "./styles/GlobalStyles";
 
 function App() {
@@ -10,8 +8,7 @@ function App() {
     <>
       <GlobalStyles />
       <Header />
-      <TextInput />
-      <SearchButton />
+      <Main />
     </>
   );
 }

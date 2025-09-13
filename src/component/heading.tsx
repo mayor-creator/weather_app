@@ -8,6 +8,8 @@ const Heading = styled.h1`
   font-weight: ${typography.textPresetTwo.fontWeight};
   font-family: ${typography.textPresetTwo.fontFamily};
   color: var(--color-neutral0);
+  height: auto;
+  text-align: center;
 `;
 
 export default Heading;

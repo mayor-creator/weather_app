@@ -12,73 +12,73 @@ export type Typography = {
 
 export const typography: Typography = {
   textPresetOne: {
-    fontSize: "96px",
+    fontSize: "6rem",
     lineHeight: "100%",
-    letterSpacing: "-2px",
+    letterSpacing: "-0.125rem",
     fontWeight: 600,
     fontFamily: '"DM Sans", sans-serif',
   },
 
   textPresetTwo: {
-    fontSize: "52px",
+    fontSize: "3.25rem",
     lineHeight: "120%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 700,
     fontFamily: '"Bricolage Grotesque", sans-serif',
   },
 
   textPresetThree: {
-    fontSize: "32px",
+    fontSize: "2rem",
     lineHeight: "100%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 300,
     fontFamily: '"DM Sans", sans-serif',
   },
 
   textPresetFour: {
-    fontSize: "28px",
+    fontSize: "1.75rem",
     lineHeight: "120%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 700,
     fontFamily: '"DM Sans", sans-serif',
   },
 
   textPresetFive: {
-    fontSize: "20px",
+    fontSize: "1.25rem",
     lineHeight: "120%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 600,
     fontFamily: '"DM Sans", sans-serif',
   },
 
   textPresetFiveMedium: {
-    fontSize: "20px",
+    fontSize: "1.25rem",
     lineHeight: "120%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 500,
     fontFamily: '"DM Sans", sans-serif',
   },
 
   textPresetSix: {
-    fontSize: "18px",
+    fontSize: "1.125rem",
     lineHeight: "120%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 500,
     fontFamily: '"DM Sans", sans-serif',
   },
 
   textPresetSeven: {
-    fontSize: "16px",
+    fontSize: "1rem",
     lineHeight: "120%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 500,
     fontFamily: '"DM Sans", sans-serif',
   },
 
   textPresetEight: {
-    fontSize: "14px",
+    fontSize: "0.875rem",
     lineHeight: "120%",
-    letterSpacing: "0px",
+    letterSpacing: "0rem",
     fontWeight: 500,
     fontFamily: '"DM Sans", sans-serif',
   },

@@ -6,7 +6,7 @@ import { typography } from "../styles/typography";
 const InputSection = styled.section<{ isActive: boolean }>`
   display: flex;
   flex-direction: row;
-  border: 1px solid transparent;
+  border: 0.063rem solid transparent;
   border-radius: 0.75rem;
   background-color: var(--color-neutral800);
   color: var(--color-neutral200);
@@ -30,18 +30,18 @@ const InputSection = styled.section<{ isActive: boolean }>`
   &:focus {
     outline: none;
     border-color: var(--color-neutral0);
-    box-shadow: 0 0 5px var(--color-neutral800);
+    box-shadow: 0 0 0.313rem var(--color-neutral800);
   }
 
   ${({ isActive }) =>
     isActive &&
-    `border-color: var(--color-neutral0);  box-shadow: 0 0 5px var(--color-neutral800);`}
+    `border-color: var(--color-neutral0);  box-shadow: 0 0 .313rem var(--color-neutral800);`}
 `;
 
 const Label = styled.label`
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 0.063rem;
+  height: 0.063rem;
   overflow: hidden;
 `;
 

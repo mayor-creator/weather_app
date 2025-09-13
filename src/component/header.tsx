@@ -6,7 +6,8 @@ const HeaderMainWrapper = styled.header`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  gap: 48px;
+  gap: 3rem;
+  padding-bottom: 3rem;
 `;
 
 const LogoUnitsWrapper = styled.div`
@@ -15,8 +16,8 @@ const LogoUnitsWrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 28px;
-  width: 138px;
+  height: 1.75rem;
+  width: 8.625rem;
 `;
 
 export const Header = () => {
@@ -26,7 +27,7 @@ export const Header = () => {
         <Logo src={logo} alt="logo" />
         <p style={{ color: "white" }}>Units</p>
       </LogoUnitsWrapper>
-      <Heading>How's the sky looking today</Heading>
+      <Heading>How's the sky looking today?</Heading>
     </HeaderMainWrapper>
   );
 };
