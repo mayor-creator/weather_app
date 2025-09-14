@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { SearchButton } from "./SearchButton";
-import { TextInput } from "./TextInput";
+import { WeatherLocationSearch } from "./search/WeatherLocationSearch";
 
 const MainContentWrapper = styled.main`
   display: flex;
@@ -9,23 +8,10 @@ const MainContentWrapper = styled.main`
   padding: 0rem 1rem;
 `;
 
-const SearchContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-`;
-
 export const Main = () => {
-  const handleWeatherApi = () => {
-    console.log("I call the api");
-  };
-
   return (
     <MainContentWrapper>
-      <SearchContainer>
-        <TextInput></TextInput>
-        <SearchButton onClick={handleWeatherApi} />
-      </SearchContainer>
+      <WeatherLocationSearch />
     </MainContentWrapper>
   );
 };

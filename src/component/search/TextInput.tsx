@@ -1,7 +1,12 @@
 import { useId, useState } from "react";
 import styled from "styled-components";
-import searchIcon from "../assets/images/icon-search.svg";
-import { typography } from "../styles/typography";
+import searchIcon from "../../assets/images/icon-search.svg";
+import { typography } from "../../styles/typography";
+
+interface TextInputProps {
+  searchText: string;
+  onSearchTextChange: (value: string) => void;
+}
 
 const InputSection = styled.section<{ isActive: boolean }>`
   display: flex;
@@ -63,9 +68,11 @@ const Input = styled.input`
   }
 `;
 
-export const TextInput = () => {
+export const TextInput = ({
+  searchText,
+  onSearchTextChange,
+}: TextInputProps) => {
   const [isActive, setIsActive] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const id = useId();
 
   const handleFocus = () => setIsActive(true);
@@ -83,7 +90,7 @@ export const TextInput = () => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         aria-label="Search for a city"
-        onChange={(event) => setSearchText(event.target.value)}
+        onChange={(event) => onSearchTextChange(event.target.value)}
       />
     </InputSection>
   );
