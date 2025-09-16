@@ -48,6 +48,43 @@ const Temperature = styled.p`
   color: var(--color-neutral0);
 `;
 
+const WeatherDetailsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+`;
+
+const WeatherDetailsItemContainer = styled.div`
+  border-radius: 0.75rem;
+  background-color: var(--color-neutral800);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.25rem;
+  width: 10.219rem;
+  height: auto;
+  min-height: 7.375rem;
+`;
+
+const WeatherDetailsLabel = styled.p`
+  font-size: ${typography.textPresetSix.fontSize};
+  line-height: ${typography.textPresetSix.lineHeight};
+  letter-spacing: ${typography.textPresetSix.letterSpacing};
+  font-weight: ${typography.textPresetSix.fontWeight};
+  font-family: ${typography.textPresetSix.fontFamily};
+  color: var(--color-neutral200);
+`;
+
+const WeatherDetailsValue = styled.p`
+  font-size: ${typography.textPresetThree.fontSize};
+  line-height: ${typography.textPresetThree.lineHeight};
+  letter-spacing: ${typography.textPresetThree.letterSpacing};
+  font-weight: ${typography.textPresetThree.fontWeight};
+  font-family: ${typography.textPresetThree.fontFamily};
+  color: var(--color-neutral0);
+`;
+
 interface LocationResultProps {
   data: any;
   isLoading: boolean;
@@ -128,18 +165,39 @@ export const WeatherLocationSearchResult = ({
           )}
         </BackgroundImageContainer>
 
-        <h4>Current Weather:</h4>
-
         {weatherError && <p>Error fetching weather: {weatherError}</p>}
         {!weather && <p>Loading weather...</p>}
 
         {weather?.current && (
-          <div>
-            <p>Feels Like: {weather.current.apparent_temperature} °</p>
-            <p>Humidity: {weather.current.relative_humidity_2m} %</p>
-            <p>Precipitation: {weather.current.precipitation} mm</p>
-            <p>Wind Speed: {weather.current.windspeed_10m} km/h</p>
-          </div>
+          <WeatherDetailsContainer>
+            <WeatherDetailsItemContainer>
+              <WeatherDetailsLabel>Feels Like </WeatherDetailsLabel>
+              <WeatherDetailsValue>
+                {weather.current.apparent_temperature}°
+              </WeatherDetailsValue>
+            </WeatherDetailsItemContainer>
+
+            <WeatherDetailsItemContainer>
+              <WeatherDetailsLabel>Humidity</WeatherDetailsLabel>
+              <WeatherDetailsValue>
+                {weather.current.relative_humidity_2m}%
+              </WeatherDetailsValue>
+            </WeatherDetailsItemContainer>
+
+            <WeatherDetailsItemContainer>
+              <WeatherDetailsLabel>Wind</WeatherDetailsLabel>
+              <WeatherDetailsValue>
+                {weather.current.windspeed_10m}km/h
+              </WeatherDetailsValue>
+            </WeatherDetailsItemContainer>
+
+            <WeatherDetailsItemContainer>
+              <WeatherDetailsLabel>Precipitation</WeatherDetailsLabel>
+              <WeatherDetailsValue>
+                {weather.current.precipitation}mm
+              </WeatherDetailsValue>
+            </WeatherDetailsItemContainer>
+          </WeatherDetailsContainer>
         )}
       </>
     );

@@ -54,14 +54,14 @@ export const WeatherLocationSearch = () => {
         <SearchButton onClick={handleLocation} />
       </SearchContainer>
 
-      <div>
+      <>
         <WeatherLocationSearchResult
           data={data}
           isLoading={isLoading}
           error={error}
           submittedSearchText={submittedSearchText}
         />
-      </div>
+      </>
     </>
   );
 };
