@@ -1,4 +1,52 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { typography } from "../../styles/typography";
+
+import { BackgroundImageContainer } from "../background/backgroundContainer";
+
+import mobileBgIcon from "../../assets/images/bg-today-small.svg";
+import desktopBgIcon from "../../assets/images/bg-today-large.svg";
+import sunnyIcon from "../../assets/images/icon-sunny.webp";
+
+const LocationInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const LocationName = styled.p`
+  font-size: ${typography.textPresetFour.fontSize};
+  line-height: ${typography.textPresetFour.lineHeight};
+  letter-spacing: ${typography.textPresetFour.letterSpacing};
+  font-weight: ${typography.textPresetFour.fontWeight};
+  font-family: ${typography.textPresetFour.fontFamily};
+  color: var(--color-neutral0);
+`;
+
+const LocationDate = styled.p`
+  font-size: ${typography.textPresetSix.fontSize};
+  line-height: ${typography.textPresetSix.lineHeight};
+  letter-spacing: ${typography.textPresetSix.letterSpacing};
+  font-weight: ${typography.textPresetSix.fontWeight};
+  font-family: ${typography.textPresetSix.fontFamily};
+  color: var(--color-neutral0);
+`;
+
+const TemperatureContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+`;
+
+const Temperature = styled.p`
+  font-size: ${typography.textPresetOne.fontSize};
+  line-height: ${typography.textPresetOne.lineHeight};
+  letter-spacing: ${typography.textPresetOne.letterSpacing};
+  font-weight: ${typography.textPresetOne.fontWeight};
+  font-family: ${typography.textPresetOne.fontFamily};
+  color: var(--color-neutral0);
+`;
 
 interface LocationResultProps {
   data: any;
@@ -6,6 +54,13 @@ interface LocationResultProps {
   error: Error | undefined;
   submittedSearchText: string | null;
 }
+
+const today = new Date().toLocaleDateString(undefined, {
+  weekday: "long",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
 
 const getWeather = async (lat: number, lon: number) => {
   const url =
@@ -55,15 +110,23 @@ export const WeatherLocationSearchResult = ({
     const location = data.results[0];
 
     return (
-      <div>
-        <h3>Search Result:</h3>
-        <p>
-          <strong>
-            {location.name}, {location.country}
-          </strong>
-        </p>
-        <p>Timezone: {location.timezone}</p>
-        <hr />
+      <>
+        <BackgroundImageContainer mobile={mobileBgIcon} desktop={desktopBgIcon}>
+          <LocationInfo>
+            <LocationName>
+              <strong>
+                {location.name}, {location.country}
+              </strong>
+            </LocationName>
+            <LocationDate>{today}</LocationDate>
+          </LocationInfo>
+          {weather?.current && (
+            <TemperatureContainer>
+              <img src={sunnyIcon} alt="sunny icon" height={120} width={120} />
+              <Temperature>{weather.current.temperature_2m}°</Temperature>
+            </TemperatureContainer>
+          )}
+        </BackgroundImageContainer>
 
         <h4>Current Weather:</h4>
 
@@ -72,14 +135,13 @@ export const WeatherLocationSearchResult = ({
 
         {weather?.current && (
           <div>
-            <p>Temperature: {weather.current.temperature_2m} °C</p>
-            <p>Feels Like: {weather.current.apparent_temperature} °C</p>
+            <p>Feels Like: {weather.current.apparent_temperature} °</p>
             <p>Humidity: {weather.current.relative_humidity_2m} %</p>
             <p>Precipitation: {weather.current.precipitation} mm</p>
             <p>Wind Speed: {weather.current.windspeed_10m} km/h</p>
           </div>
         )}
-      </div>
+      </>
     );
   }
 
