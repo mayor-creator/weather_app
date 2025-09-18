@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { typography } from "../../styles/typography";
+import { DailyForecast } from "../forecast/DailyForecast";
 
 import { BackgroundImageContainer } from "../background/backgroundContainer";
 
@@ -62,7 +63,6 @@ const WeatherDetailsItemContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   padding: 1.25rem;
-  width: 10.219rem;
   height: auto;
   min-height: 7.375rem;
 `;
@@ -159,7 +159,13 @@ export const WeatherLocationSearchResult = ({
           </LocationInfo>
           {weather?.current && (
             <TemperatureContainer>
-              <img src={sunnyIcon} alt="sunny icon" height={120} width={120} />
+              <img
+                src={sunnyIcon}
+                alt=""
+                aria-hidden="true"
+                height={120}
+                width={120}
+              />
               <Temperature>{weather.current.temperature_2m}°</Temperature>
             </TemperatureContainer>
           )}
@@ -199,6 +205,8 @@ export const WeatherLocationSearchResult = ({
             </WeatherDetailsItemContainer>
           </WeatherDetailsContainer>
         )}
+
+        {weather?.daily && <DailyForecast daily={weather.daily} />}
       </>
     );
   }
