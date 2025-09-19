@@ -30,9 +30,9 @@ const ForecastTitle = styled.h2`
 
 const ForecastList = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(103.66px, 1fr));
   gap: 1rem;
+  width: 100%;
 `;
 
 const ForecastCard = styled.div`
@@ -44,13 +44,30 @@ const ForecastCard = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  padding: 1.25rem;
 `;
 
-const ForecastDay = styled.p``;
+const ForecastDay = styled.p`
+  font-size: ${typography.textPresetSix.fontSize};
+  line-height: ${typography.textPresetSix.lineHeight};
+  letter-spacing: ${typography.textPresetSix.letterSpacing};
+  font-weight: ${typography.textPresetSix.fontWeight};
+  font-family: ${typography.textPresetSix.fontFamily};
+`;
 
-const TempRange = styled.p``;
+const TempRangeContainer = styled.div`
+  display: flex;
+  gap: 1.25rem;
+`;
 
-const Detail = styled.p``;
+const TempDetail = styled.p`
+  font-size: ${typography.textPresetSeven.fontSize};
+  line-height: ${typography.textPresetSeven.lineHeight};
+  letter-spacing: ${typography.textPresetSeven.letterSpacing};
+  font-weight: ${typography.textPresetSeven.fontWeight};
+  font-family: ${typography.textPresetSeven.fontFamily};
+  text-align: center;
+`;
 
 export const DailyForecast = ({ daily }: DailyForecastProps) => {
   return (
@@ -65,10 +82,14 @@ export const DailyForecast = ({ daily }: DailyForecastProps) => {
           return (
             <ForecastCard key={date}>
               <ForecastDay>{day}</ForecastDay>
-              <TempRange>
-                {daily.apparent_temperature_min[index]}° /{" "}
-                {daily.apparent_temperature_max[index]}°
-              </TempRange>
+              <TempRangeContainer>
+                <TempDetail>
+                  {daily.apparent_temperature_min[index]}°
+                </TempDetail>
+                <TempDetail>
+                  {daily.apparent_temperature_max[index]}°
+                </TempDetail>
+              </TempRangeContainer>
             </ForecastCard>
           );
         })}

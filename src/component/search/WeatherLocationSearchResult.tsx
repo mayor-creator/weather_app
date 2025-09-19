@@ -1,89 +1,7 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { typography } from "../../styles/typography";
+import { CurrentWeatherDetails } from "../currentWeather/CurrentWeatherDetails";
+import { CurrentWeatherHeader } from "../currentWeather/currentWeather";
 import { DailyForecast } from "../forecast/DailyForecast";
-
-import { BackgroundImageContainer } from "../background/backgroundContainer";
-
-import mobileBgIcon from "../../assets/images/bg-today-small.svg";
-import desktopBgIcon from "../../assets/images/bg-today-large.svg";
-import sunnyIcon from "../../assets/images/icon-sunny.webp";
-
-const LocationInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-`;
-
-const LocationName = styled.p`
-  font-size: ${typography.textPresetFour.fontSize};
-  line-height: ${typography.textPresetFour.lineHeight};
-  letter-spacing: ${typography.textPresetFour.letterSpacing};
-  font-weight: ${typography.textPresetFour.fontWeight};
-  font-family: ${typography.textPresetFour.fontFamily};
-  color: var(--color-neutral0);
-`;
-
-const LocationDate = styled.p`
-  font-size: ${typography.textPresetSix.fontSize};
-  line-height: ${typography.textPresetSix.lineHeight};
-  letter-spacing: ${typography.textPresetSix.letterSpacing};
-  font-weight: ${typography.textPresetSix.fontWeight};
-  font-family: ${typography.textPresetSix.fontFamily};
-  color: var(--color-neutral0);
-`;
-
-const TemperatureContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-`;
-
-const Temperature = styled.p`
-  font-size: ${typography.textPresetOne.fontSize};
-  line-height: ${typography.textPresetOne.lineHeight};
-  letter-spacing: ${typography.textPresetOne.letterSpacing};
-  font-weight: ${typography.textPresetOne.fontWeight};
-  font-family: ${typography.textPresetOne.fontFamily};
-  color: var(--color-neutral0);
-`;
-
-const WeatherDetailsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 1rem;
-`;
-
-const WeatherDetailsItemContainer = styled.div`
-  border-radius: 0.75rem;
-  background-color: var(--color-neutral800);
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.25rem;
-  height: auto;
-  min-height: 7.375rem;
-`;
-
-const WeatherDetailsLabel = styled.p`
-  font-size: ${typography.textPresetSix.fontSize};
-  line-height: ${typography.textPresetSix.lineHeight};
-  letter-spacing: ${typography.textPresetSix.letterSpacing};
-  font-weight: ${typography.textPresetSix.fontWeight};
-  font-family: ${typography.textPresetSix.fontFamily};
-  color: var(--color-neutral200);
-`;
-
-const WeatherDetailsValue = styled.p`
-  font-size: ${typography.textPresetThree.fontSize};
-  line-height: ${typography.textPresetThree.lineHeight};
-  letter-spacing: ${typography.textPresetThree.letterSpacing};
-  font-weight: ${typography.textPresetThree.fontWeight};
-  font-family: ${typography.textPresetThree.fontFamily};
-  color: var(--color-neutral0);
-`;
 
 interface LocationResultProps {
   data: any;
@@ -142,71 +60,31 @@ export const WeatherLocationSearchResult = ({
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
+  if (weatherError) return <p>Error fetching weather: {weatherError}</p>;
+  if (!weather) return <p>Loading weather...</p>;
 
   if (data?.results?.length > 0) {
     const location = data.results[0];
 
     return (
       <>
-        <BackgroundImageContainer mobile={mobileBgIcon} desktop={desktopBgIcon}>
-          <LocationInfo>
-            <LocationName>
-              <strong>
-                {location.name}, {location.country}
-              </strong>
-            </LocationName>
-            <LocationDate>{today}</LocationDate>
-          </LocationInfo>
-          {weather?.current && (
-            <TemperatureContainer>
-              <img
-                src={sunnyIcon}
-                alt=""
-                aria-hidden="true"
-                height={120}
-                width={120}
-              />
-              <Temperature>{weather.current.temperature_2m}°</Temperature>
-            </TemperatureContainer>
-          )}
-        </BackgroundImageContainer>
+        <CurrentWeatherHeader
+          locationName={location.name}
+          country={location.country}
+          date={today}
+          temperature={weather?.current?.temperature_2m}
+        />
 
-        {weatherError && <p>Error fetching weather: {weatherError}</p>}
-        {!weather && <p>Loading weather...</p>}
-
-        {weather?.current && (
-          <WeatherDetailsContainer>
-            <WeatherDetailsItemContainer>
-              <WeatherDetailsLabel>Feels Like </WeatherDetailsLabel>
-              <WeatherDetailsValue>
-                {weather.current.apparent_temperature}°
-              </WeatherDetailsValue>
-            </WeatherDetailsItemContainer>
-
-            <WeatherDetailsItemContainer>
-              <WeatherDetailsLabel>Humidity</WeatherDetailsLabel>
-              <WeatherDetailsValue>
-                {weather.current.relative_humidity_2m}%
-              </WeatherDetailsValue>
-            </WeatherDetailsItemContainer>
-
-            <WeatherDetailsItemContainer>
-              <WeatherDetailsLabel>Wind</WeatherDetailsLabel>
-              <WeatherDetailsValue>
-                {weather.current.windspeed_10m}km/h
-              </WeatherDetailsValue>
-            </WeatherDetailsItemContainer>
-
-            <WeatherDetailsItemContainer>
-              <WeatherDetailsLabel>Precipitation</WeatherDetailsLabel>
-              <WeatherDetailsValue>
-                {weather.current.precipitation}mm
-              </WeatherDetailsValue>
-            </WeatherDetailsItemContainer>
-          </WeatherDetailsContainer>
+        {weather.current && (
+          <CurrentWeatherDetails
+            apparentTemperature={weather.current.apparent_temperature}
+            humidity={weather.current.relative_humidity_2m}
+            windSpeed={weather.current.windspeed_10m}
+            precipitation={weather.current.precipitation}
+          />
         )}
 
-        {weather?.daily && <DailyForecast daily={weather.daily} />}
+        {weather.daily && <DailyForecast daily={weather.daily} />}
       </>
     );
   }
