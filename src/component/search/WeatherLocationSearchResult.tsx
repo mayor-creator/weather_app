@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CurrentWeatherDetails } from "../currentWeather/CurrentWeatherDetails";
 import { CurrentWeatherHeader } from "../currentWeather/currentWeather";
 import { DailyForecast } from "../forecast/DailyForecast";
+import { HourlyForecast } from "../forecast/HourlyForecast";
 
 interface LocationResultProps {
   data: any;
@@ -85,6 +86,7 @@ export const WeatherLocationSearchResult = ({
         )}
 
         {weather.daily && <DailyForecast daily={weather.daily} />}
+        {weather.hourly && <HourlyForecast hourly={weather.hourly} />}
       </>
     );
   }

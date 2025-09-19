@@ -84,10 +84,10 @@ export const DailyForecast = ({ daily }: DailyForecastProps) => {
               <ForecastDay>{day}</ForecastDay>
               <TempRangeContainer>
                 <TempDetail>
-                  {daily.apparent_temperature_min[index]}°
+                  {Math.round(daily.apparent_temperature_min[index])}°
                 </TempDetail>
                 <TempDetail>
-                  {daily.apparent_temperature_max[index]}°
+                  {Math.round(daily.apparent_temperature_max[index])}°
                 </TempDetail>
               </TempRangeContainer>
             </ForecastCard>

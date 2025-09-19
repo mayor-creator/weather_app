@@ -52,7 +52,9 @@ export const CurrentWeatherDetails = ({
     <WeatherDetailsContainer>
       <WeatherDetailsItemContainer>
         <WeatherDetailsLabel>Feels Like</WeatherDetailsLabel>
-        <WeatherDetailsValue>{apparentTemperature}°</WeatherDetailsValue>
+        <WeatherDetailsValue>
+          {Math.round(apparentTemperature)}°
+        </WeatherDetailsValue>
       </WeatherDetailsItemContainer>
 
       <WeatherDetailsItemContainer>
@@ -62,7 +64,7 @@ export const CurrentWeatherDetails = ({
 
       <WeatherDetailsItemContainer>
         <WeatherDetailsLabel>Wind</WeatherDetailsLabel>
-        <WeatherDetailsValue>{windSpeed}km/h</WeatherDetailsValue>
+        <WeatherDetailsValue>{Math.round(windSpeed)}km/h</WeatherDetailsValue>
       </WeatherDetailsItemContainer>
 
       <WeatherDetailsItemContainer>

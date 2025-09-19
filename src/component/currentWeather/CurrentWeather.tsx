@@ -78,7 +78,7 @@ export const CurrentWeatherHeader = ({
           height={120}
           width={120}
         />
-        <Temperature>{temperature}°</Temperature>
+        <Temperature>{Math.round(temperature)}°</Temperature>
       </TemperatureContainer>
     </BackgroundImageContainer>
   );
