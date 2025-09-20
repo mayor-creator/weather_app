@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import overcastIcon from "../../assets/images/icon-overcast.webp";
 import { typography } from "../../styles/typography";
+import { weatherConditionsIcon } from "../weatherConditions/WeatherConditions";
 
 const HourlyForecastContainer = styled.div`
   background: var(--color-neutral800);
@@ -88,26 +88,59 @@ interface HourlyForecastProps {
   hourly: {
     time: string[];
     apparent_temperature: number[];
+    weathercode: number[];
   };
+  temperatureUnit: "C" | "F";
 }
 
-export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
+const weatherCodeToDescription = (code: number): string => {
+  const map: { [key: number]: string } = {
+    0: "Clear sky",
+    1: "Mainly clear",
+    2: "Partly cloudy",
+    3: "Overcast",
+    45: "Fog",
+    48: "Depositing rime fog",
+    51: "Light drizzle",
+    53: "Moderate drizzle",
+    55: "Dense drizzle",
+    56: "Freezing drizzle",
+    57: "Freezing drizzle dense",
+    61: "Slight rain",
+    63: "Moderate rain",
+    65: "Heavy rain",
+    66: "Freezing rain light",
+    67: "Freezing rain heavy",
+    71: "Slight snow fall",
+    73: "Moderate snow fall",
+    75: "Heavy snow fall",
+    77: "Snow grains",
+    80: "Rain showers slight",
+    81: "Rain showers moderate",
+    82: "Rain showers violent",
+    85: "Snow showers slight",
+    86: "Snow showers heavy",
+    95: "Thunderstorm",
+    96: "Thunderstorm with slight hail",
+    99: "Thunderstorm with heavy hail",
+  };
+
+  return map[code] || "Unknown";
+};
+
+export const HourlyForecast = ({
+  hourly,
+  temperatureUnit,
+}: HourlyForecastProps) => {
   const [dayOfTheWeek, setDayOfTheWeek] = useState<string>(() => {
     return new Date().toLocaleDateString(undefined, { weekday: "long" });
   });
 
-  const now = new Date();
   const hourlyData = hourly.time.map((time, index) => ({
     time,
     temperature: hourly.apparent_temperature[index],
+    description: weatherCodeToDescription(hourly.weathercode[index]),
   }));
-
-  // const nextHours = hourlyData
-  //   .filter((entry) => {
-  //     const entryDate = new Date(entry.time);
-  //     return entryDate > now && entryDate.getDate() === now.getDate();
-  //   })
-  //   .slice(0, 6);
 
   const filteredHourly = hourlyData.filter((entry) => {
     const entryDate = new Date(entry.time);
@@ -151,11 +184,11 @@ export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
       </HourlyForecastHeader>
 
       {filteredHourly.map((hour) => (
-        <HourlyForecastCard key={crypto.randomUUID()}>
+        <HourlyForecastCard key={hour.time}>
           <HourlyForecastTimeContainer>
             <img
-              src={overcastIcon}
-              alt=""
+              src={weatherConditionsIcon(hour.description)}
+              alt={hour.description}
               aria-hidden="true"
               height={40}
               width={40}
@@ -167,7 +200,7 @@ export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
             </HourlyForecastTime>
           </HourlyForecastTimeContainer>
           <HourlyForecastTemp>
-            {Math.round(hour.temperature)}°
+            {Math.round(hour.temperature)}°{temperatureUnit}
           </HourlyForecastTemp>
         </HourlyForecastCard>
       ))}

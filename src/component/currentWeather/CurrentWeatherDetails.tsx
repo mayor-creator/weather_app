@@ -40,6 +40,7 @@ interface CurrentWeatherDetailsProps {
   humidity: number;
   windSpeed: number;
   precipitation: number;
+  temperatureUnit: "C" | "F";
 }
 
 export const CurrentWeatherDetails = ({
@@ -47,13 +48,14 @@ export const CurrentWeatherDetails = ({
   humidity,
   windSpeed,
   precipitation,
+  temperatureUnit,
 }: CurrentWeatherDetailsProps) => {
   return (
     <WeatherDetailsContainer>
       <WeatherDetailsItemContainer>
         <WeatherDetailsLabel>Feels Like</WeatherDetailsLabel>
         <WeatherDetailsValue>
-          {Math.round(apparentTemperature)}°
+          {Math.round(apparentTemperature)}°{temperatureUnit}
         </WeatherDetailsValue>
       </WeatherDetailsItemContainer>
 

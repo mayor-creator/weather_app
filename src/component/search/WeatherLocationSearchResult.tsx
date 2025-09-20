@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { TempUnitContext } from "../../component/TempUnitContext";
+import { CurrentWeatherHeader } from "../currentWeather/CurrentWeather";
 import { CurrentWeatherDetails } from "../currentWeather/CurrentWeatherDetails";
-import { CurrentWeatherHeader } from "../currentWeather/currentWeather";
 import { DailyForecast } from "../forecast/DailyForecast";
 import { HourlyForecast } from "../forecast/HourlyForecast";
+import { CelsiusToFahrenheit } from "../TempConverter";
 
 interface LocationResultProps {
   data: any;
@@ -21,9 +23,9 @@ const today = new Date().toLocaleDateString(undefined, {
 const getWeather = async (lat: number, lon: number) => {
   const url =
     `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
-    `&hourly=apparent_temperature,relative_humidity_2m,precipitation,windspeed_10m` +
-    `&daily=apparent_temperature_max,apparent_temperature_min,precipitation_sum,windspeed_10m_max,relative_humidity_2m_max` +
-    `&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,windspeed_10m` +
+    `&hourly=apparent_temperature,relative_humidity_2m,precipitation,windspeed_10m,weathercode` +
+    `&daily=apparent_temperature_max,apparent_temperature_min,precipitation_sum,windspeed_10m_max,relative_humidity_2m_max,weathercode` +
+    `&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,windspeed_10m,weathercode` +
     `&timezone=auto`;
 
   const res = await fetch(url);
@@ -39,6 +41,7 @@ export const WeatherLocationSearchResult = ({
 }: LocationResultProps) => {
   const [weather, setWeather] = useState<any>(null);
   const [weatherError, setWeatherError] = useState<string | null>(null);
+  const { tempUnit } = useContext(TempUnitContext);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -67,26 +70,62 @@ export const WeatherLocationSearchResult = ({
   if (data?.results?.length > 0) {
     const location = data.results[0];
 
+    const convertTemp = (temp: number) =>
+      tempUnit === "F" ? CelsiusToFahrenheit(temp) : temp;
+
+    const convertArray = (arr: number[]) =>
+      tempUnit === "F" ? arr.map(CelsiusToFahrenheit) : arr;
+
     return (
       <>
         <CurrentWeatherHeader
           locationName={location.name}
           country={location.country}
           date={today}
-          temperature={weather?.current?.temperature_2m}
+          temperature={convertTemp(weather?.current?.temperature_2m)}
+          weathercode={weather?.current?.weathercode}
+          temperatureUnit={tempUnit}
         />
 
         {weather.current && (
           <CurrentWeatherDetails
-            apparentTemperature={weather.current.apparent_temperature}
+            apparentTemperature={convertTemp(
+              weather.current.apparent_temperature
+            )}
             humidity={weather.current.relative_humidity_2m}
             windSpeed={weather.current.windspeed_10m}
             precipitation={weather.current.precipitation}
+            temperatureUnit={tempUnit}
           />
         )}
 
-        {weather.daily && <DailyForecast daily={weather.daily} />}
-        {weather.hourly && <HourlyForecast hourly={weather.hourly} />}
+        {weather.daily && (
+          <DailyForecast
+            daily={{
+              ...weather.daily,
+              apparent_temperature_max: convertArray(
+                weather.daily.apparent_temperature_max
+              ),
+              apparent_temperature_min: convertArray(
+                weather.daily.apparent_temperature_min
+              ),
+            }}
+            weathercode={weather.daily.weathercode}
+            temperatureUnit={tempUnit}
+          />
+        )}
+
+        {weather.hourly && (
+          <HourlyForecast
+            hourly={{
+              ...weather.hourly,
+              apparent_temperature: convertArray(
+                weather.hourly.apparent_temperature
+              ),
+            }}
+            temperatureUnit={tempUnit}
+          />
+        )}
       </>
     );
   }
