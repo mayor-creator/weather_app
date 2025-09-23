@@ -1,9 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { TempUnitContext } from "../../component/TempUnitContext";
 import { CurrentWeatherHeader } from "../currentWeather/CurrentWeather";
 import { CurrentWeatherDetails } from "../currentWeather/CurrentWeatherDetails";
 import { DailyForecast } from "../forecast/DailyForecast";
 import { HourlyForecast } from "../forecast/HourlyForecast";
+import { ErrorMessage } from "../loading/ErrorMessage";
+import { Loading } from "../loading/Loading";
 import { CelsiusToFahrenheit } from "../TempConverter";
 
 interface LocationResultProps {
@@ -43,29 +45,39 @@ export const WeatherLocationSearchResult = ({
   const [weatherError, setWeatherError] = useState<string | null>(null);
   const { tempUnit } = useContext(TempUnitContext);
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      if (data?.results?.length > 0) {
-        const location = data.results[0];
-        try {
-          const weatherData = await getWeather(
-            location.latitude,
-            location.longitude
-          );
-          setWeather(weatherData);
-        } catch (err) {
-          setWeatherError((err as Error).message);
-        }
+  const fetchWeather = useCallback(async () => {
+    if (data?.results?.length > 0) {
+      const location = data.results[0];
+      try {
+        setWeatherError(null);
+        const weatherData = await getWeather(
+          location.latitude,
+          location.longitude
+        );
+        setWeather(weatherData);
+      } catch (err) {
+        setWeather(null);
+        setWeatherError((err as Error).message);
       }
-    };
-
-    fetchWeather();
+    }
   }, [data]);
 
-  if (isLoading) return <p>Loading...</p>;
+  useEffect(() => {
+    fetchWeather();
+  }, [fetchWeather]);
+
+  if (isLoading) return <Loading></Loading>;
   if (error) return <p>Error: {error.message}</p>;
-  if (weatherError) return <p>Error fetching weather: {weatherError}</p>;
-  if (!weather) return <p>Loading weather...</p>;
+  if (weatherError) {
+    return (
+      <ErrorMessage
+        onClick={fetchWeather}
+        errorMessageText="Something went wrong"
+        errorMessageTextMedium="We couldn't connect to the server(API error). Please try again in a few moments."
+      ></ErrorMessage>
+    );
+  }
+  if (!weather) return <Loading></Loading>;
 
   if (data?.results?.length > 0) {
     const location = data.results[0];
