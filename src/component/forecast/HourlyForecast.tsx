@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { typography } from "../../styles/typography";
+import { rem } from "../breakpoints";
+import { media } from "../media";
 import { weatherConditionsIcon } from "../weatherConditions/WeatherConditions";
 
 const HourlyForecastContainer = styled.div`
@@ -50,6 +52,7 @@ const HourlyForecastDropdown = styled.select`
 
 const HourlyForecastCard = styled.div`
   background: var(--color-neutral600);
+  border: ${rem(1)} solid var(--color-neutral600);
   color: var(--color-neutral0);
   display: flex;
   align-items: center;
@@ -57,7 +60,13 @@ const HourlyForecastCard = styled.div`
   justify-content: space-between;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  align-items: center;
+
+  ${media.up("tablet")} {
+    padding-top: ${rem(10)};
+    padding-bottom: ${rem(10)};
+    padding-left: ${rem(12)};
+    padding-right: ${rem(16)};
+  }
 `;
 
 const HourlyForecastTimeContainer = styled.div`
