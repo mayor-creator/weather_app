@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { media } from "../media";
 
 interface BackgroundImageProps {
   mobile: string;
@@ -19,7 +20,8 @@ export const BackgroundImageContainer = styled.div<BackgroundImageProps>`
   width: 100%;
   height: 17.875rem;
 
-  @media (min-width: 48rem) {
+  ${media.up("tablet")} {
+    flex-direction: row;
     background-image: url(${(props) => props.desktop});
   }
 `;

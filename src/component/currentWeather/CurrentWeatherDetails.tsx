@@ -1,14 +1,21 @@
 import styled from "styled-components";
 import { typography } from "../../styles/typography";
+import { rem } from "../breakpoints";
+import { media } from "../media";
 
 const WeatherDetailsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+
+  ${media.up("tablet")} {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 const WeatherDetailsItemContainer = styled.div`
   border-radius: 0.75rem;
+  border: ${rem(1)} solid var(--color-neutral600);
   background-color: var(--color-neutral800);
   display: flex;
   flex-direction: column;

@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import styled from "styled-components";
 import searchIcon from "../../assets/images/icon-search.svg";
 import { typography } from "../../styles/typography";
+import { media } from "../media";
 
 interface TextInputProps {
   searchText: string;
@@ -41,6 +42,10 @@ const InputSection = styled.section<{ isActive: boolean }>`
   ${({ isActive }) =>
     isActive &&
     `border-color: var(--color-neutral0);  box-shadow: 0 0 .313rem var(--color-neutral800);`}
+
+  ${media.up("tablet")} {
+    width: 100%;
+  }
 `;
 
 const Label = styled.label`

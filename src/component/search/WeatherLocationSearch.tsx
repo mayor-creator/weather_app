@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useSWR from "swr";
-
+import { rem } from "../breakpoints";
+import { media } from "../media";
 import { SearchButton } from "./SearchButton";
 import { TextInput } from "./TextInput";
 import { WeatherLocationSearchResult } from "./WeatherLocationSearchResult";
@@ -10,6 +11,11 @@ const SearchContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  ${media.up("tablet")} {
+    flex-direction: row;
+    gap: ${rem(16)};
+  }
 `;
 
 async function fetcher(endpoint: RequestInfo | URL) {

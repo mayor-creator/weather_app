@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { typography } from "../../styles/typography";
+import { rem } from "../breakpoints";
+import { media } from "../media";
 import { weatherConditionsIcon } from "../weatherConditions/WeatherConditions";
 
 interface DailyData {
@@ -33,14 +35,22 @@ const ForecastTitle = styled.h2`
 
 const ForecastList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(103.66px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(${rem(103.66)}, 1fr));
   gap: 1rem;
   width: 100%;
+
+  ${media.up("tablet")} {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(${rem(89.14)}, max-content)
+    );
+  }
 `;
 
 const ForecastCard = styled.div`
   height: auto;
   background: var(--color-neutral800);
+  border: ${rem(1)} solid var(--color-neutral600);
   border-radius: 0.75rem;
   color: var(--color-neutral0);
   display: flex;
@@ -107,11 +117,7 @@ const weatherCodeToDescription = (code: number): string => {
   return map[code] || "Unknown";
 };
 
-export const DailyForecast = ({
-  daily,
-  weathercode,
-  temperatureUnit,
-}: DailyForecastProps) => {
+export const DailyForecast = ({ daily, weathercode }: DailyForecastProps) => {
   const dailyHour = daily.time.map((time, index) => ({
     time,
     description: weatherCodeToDescription(weathercode[index]),
@@ -139,11 +145,9 @@ export const DailyForecast = ({
               <TempRangeContainer>
                 <TempDetail>
                   {Math.round(daily.apparent_temperature_min[index])}°
-                  {temperatureUnit}
                 </TempDetail>
                 <TempDetail>
                   {Math.round(daily.apparent_temperature_max[index])}°
-                  {temperatureUnit}
                 </TempDetail>
               </TempRangeContainer>
             </ForecastCard>

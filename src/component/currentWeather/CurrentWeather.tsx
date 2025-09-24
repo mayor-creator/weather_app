@@ -3,6 +3,7 @@ import desktopBgIcon from "../../assets/images/bg-today-large.svg";
 import mobileBgIcon from "../../assets/images/bg-today-small.svg";
 import { typography } from "../../styles/typography";
 import { BackgroundImageContainer } from "../background/backgroundContainer";
+import { media } from "../media";
 import { weatherConditionsIcon } from "../weatherConditions/WeatherConditions";
 
 const LocationInfo = styled.div`
@@ -10,6 +11,10 @@ const LocationInfo = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+
+  ${media.up("tablet")} {
+    align-items: flex-start;
+  }
 `;
 
 const LocationName = styled.p`
