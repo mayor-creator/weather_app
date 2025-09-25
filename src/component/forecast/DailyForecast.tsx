@@ -22,6 +22,12 @@ const ForecastContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+
+  ${media.up("desktop")} {
+    grid-column: span 4 / span 4;
+    grid-column-start: 1;
+    grid-row-start: 5;
+  }
 `;
 
 const ForecastTitle = styled.h2`
@@ -44,6 +50,10 @@ const ForecastList = styled.div`
       auto-fill,
       minmax(${rem(89.14)}, max-content)
     );
+  }
+
+  ${media.up("desktop")} {
+    grid-template-columns: repeat(auto-fit, minmax(${rem(103.66)}, 1fr));
   }
 `;
 

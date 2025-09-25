@@ -11,6 +11,12 @@ const HourlyForecastContainer = styled.div`
   gap: 1rem;
   flex-direction: column;
   padding: 1rem 1.25rem;
+
+  ${media.up("desktop")} {
+    grid-row: span 4 / span 4;
+    grid-column-start: 5;
+    grid-row-start: 2;
+  }
 `;
 
 const HourlyForecastHeader = styled.div`

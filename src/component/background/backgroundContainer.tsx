@@ -24,4 +24,10 @@ export const BackgroundImageContainer = styled.div<BackgroundImageProps>`
     flex-direction: row;
     background-image: url(${(props) => props.desktop});
   }
+
+  ${media.up("desktop")} {
+    grid-column: span 4 / span 4;
+    grid-row: span 2 / span 2;
+    grid-row-start: 2;
+  }
 `;

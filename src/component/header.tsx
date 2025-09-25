@@ -27,6 +27,9 @@ const HeaderMainWrapper = styled.header`
 
   //desktop and up (900px - 1439.98px)
   ${media.up("desktop")} {
+    padding-left: ${rem(112)};
+    padding-right: ${rem(112)};
+    padding-top: ${rem(48)};
   }
 `;
 

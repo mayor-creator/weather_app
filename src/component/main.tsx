@@ -8,19 +8,19 @@ const MainContentWrapper = styled.main`
   flex-direction: column;
   gap: 2rem;
   padding: 0rem 1rem;
-
-  //mobile only (max-width: 699.98px)
-  ${media.down("mobile")} {
-  }
+  padding-bottom: ${rem(80)};
 
   //tablet and up (mind-width: 700px)
   ${media.up("tablet")} {
     padding: ${rem(0)} ${rem(24)};
-    padding-bottom: ${rem(80)};
   }
 
   //desktop and up (900px - 1439.98px)
   ${media.up("desktop")} {
+    padding-left: ${rem(112)};
+    padding-right: ${rem(112)};
+    display: grid;
+    gap: ${rem(20)};
   }
 `;
 

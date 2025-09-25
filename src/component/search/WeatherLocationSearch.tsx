@@ -16,6 +16,11 @@ const SearchContainer = styled.div`
     flex-direction: row;
     gap: ${rem(16)};
   }
+
+  ${media.up("desktop")} {
+    grid-column: span 3 / span 3;
+    grid-column-start: 2;
+  }
 `;
 
 async function fetcher(endpoint: RequestInfo | URL) {

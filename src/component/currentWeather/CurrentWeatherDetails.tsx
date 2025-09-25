@@ -11,6 +11,12 @@ const WeatherDetailsContainer = styled.div`
   ${media.up("tablet")} {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  ${media.up("desktop")} {
+    grid-column: span 4 / span 4;
+    grid-column-start: 1;
+    grid-row-start: 4;
+  }
 `;
 
 const WeatherDetailsItemContainer = styled.div`
