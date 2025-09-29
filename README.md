@@ -37,8 +37,8 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
+![Mobile](./mobile.png)
+![Tablet](./tablet.png)
 
 ### Links
 
@@ -50,7 +50,6 @@ Users should be able to:
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
@@ -59,29 +58,41 @@ Users should be able to:
 
 
 ### What I learned
-
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
 ```css
-.proud-of-this-css {
-  color: papayawhip;
-}
+ display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-image: url(${(props) => props.mobile});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 1.25rem;
+  width: 100%;
+  height: 17.875rem;
 ```
 ```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+const { data, error, isLoading } = useSWR(
+    shouldFetchData
+      ? `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+          submittedSearchText ?? ""
+        )}&count=1`
+      : null,
+    fetcher
+  );
 ```
 
 ### Continued development
-
+- Error Handling
+- React Styled Component
+- Hover State 
 
 
 ### Useful resources
 
 - [Using styled-components in TypeScript: A tutorial with examples](https://blog.logrocket.com/using-styled-components-in-typescript-a-tutorial-with-examples/) - This blog article explains how to implement styled component with Typescript.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [SWR](https://swr.vercel.app/) - This is a react hooks library for data fetching. It is a great tool for fetching data and simplifying the logic in your code. Give it a try in your next project.
 
 ## Author
 
