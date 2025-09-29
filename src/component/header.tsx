@@ -83,7 +83,13 @@ const ToggleButton = styled.button`
 `;
 
 export const Header = () => {
-  const { tempUnit, toggleTempUnit } = useContext(TempUnitContext);
+  const context = useContext(TempUnitContext);
+  if (!context) {
+    throw new Error(
+      "TempUnitContext must be used within a TempUnitContextProvider"
+    );
+  }
+  const { unit, toggleTempUnit } = context;
 
   return (
     <HeaderMainWrapper>
@@ -91,7 +97,7 @@ export const Header = () => {
         <Logo src={logo} alt="logo" />
         <ToggleButton type="button" onClick={toggleTempUnit}>
           <img src={unitsIcon} alt="" aria-hidden="true" />
-          {tempUnit === "C" ? "F" : "C"}
+          {unit === "C" ? "F" : "C"}
         </ToggleButton>
       </LogoUnitsWrapper>
       <Heading>How's the sky looking today?</Heading>
