@@ -43,7 +43,14 @@ export const WeatherLocationSearchResult = ({
 }: LocationResultProps) => {
   const [weather, setWeather] = useState<any>(null);
   const [weatherError, setWeatherError] = useState<string | null>(null);
-  const { tempUnit } = useContext(TempUnitContext);
+
+  const context = useContext(TempUnitContext);
+  if (!context) {
+    throw new Error(
+      "TempUnitContext must be used within a TempUnitContextProvider"
+    );
+  }
+  const { unit } = context;
 
   const fetchWeather = useCallback(async () => {
     if (data?.results?.length > 0) {
@@ -83,10 +90,10 @@ export const WeatherLocationSearchResult = ({
     const location = data.results[0];
 
     const convertTemp = (temp: number) =>
-      tempUnit === "F" ? CelsiusToFahrenheit(temp) : temp;
+      unit === "F" ? CelsiusToFahrenheit(temp) : temp;
 
     const convertArray = (arr: number[]) =>
-      tempUnit === "F" ? arr.map(CelsiusToFahrenheit) : arr;
+      unit === "F" ? arr.map(CelsiusToFahrenheit) : arr;
 
     return (
       <>
@@ -96,7 +103,7 @@ export const WeatherLocationSearchResult = ({
           date={today}
           temperature={convertTemp(weather?.current?.temperature_2m)}
           weathercode={weather?.current?.weathercode}
-          temperatureUnit={tempUnit}
+          temperatureUnit={unit}
         />
 
         {weather.current && (
@@ -107,7 +114,7 @@ export const WeatherLocationSearchResult = ({
             humidity={weather.current.relative_humidity_2m}
             windSpeed={weather.current.windspeed_10m}
             precipitation={weather.current.precipitation}
-            temperatureUnit={tempUnit}
+            temperatureUnit={unit}
           />
         )}
 
@@ -123,7 +130,7 @@ export const WeatherLocationSearchResult = ({
               ),
             }}
             weathercode={weather.daily.weathercode}
-            temperatureUnit={tempUnit}
+            temperatureUnit={unit}
           />
         )}
 
@@ -135,7 +142,7 @@ export const WeatherLocationSearchResult = ({
                 weather.hourly.apparent_temperature
               ),
             }}
-            temperatureUnit={tempUnit}
+            temperatureUnit={unit}
           />
         )}
       </>
